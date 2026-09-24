@@ -1,7 +1,6 @@
 # Aidenonlinux | Akalord
 
 Welcome to my homepage xD :) if your looking thru the repo; get outta here!
-Here are all of my projects, now working on a site for my pc building buisness.
-I will make a projects page later.
+You can check out my projects here: [Aidenonlinux Projects](https://aidenonlinux.github.io/projects)!
 
 Hope you have a wonderful day :)
