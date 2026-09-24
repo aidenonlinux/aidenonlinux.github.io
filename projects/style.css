@@ -1,0 +1,107 @@
+:root {
+  --bg: #0b1020;
+  --bg-2: #111827;
+  --panel: rgba(17, 24, 39, 0.58);
+  --panel-border: rgba(148, 163, 184, 0.2);
+  --text: #e5eefb;
+  --muted: #a9b7d1;
+  --accent: #7dd3fc;
+  --accent-2: #a78bfa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Inter", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(125, 211, 252, 0.18), transparent 30%),
+    linear-gradient(135deg, var(--bg), var(--bg-2));
+  color: var(--text);
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.hero {
+  width: min(92vw, 720px);
+  padding: 2rem;
+}
+
+.content {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  padding: clamp(2rem, 4vw, 3rem);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.tag {
+  margin: 0 0 0.85rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.subtitle {
+  margin: 1rem auto 2rem;
+  max-width: 38rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  background: linear-gradient(135deg, rgba(125, 211, 252, 0.14), rgba(167, 139, 250, 0.14));
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 1rem 1.4rem;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 12px 24px rgba(125, 211, 252, 0.18);
+}
+
+.project-link:hover,
+.project-link:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(125, 211, 252, 0.72);
+  box-shadow: 0 16px 28px rgba(125, 211, 252, 0.22);
+}
+
+@media (max-width: 540px) {
+  .hero {
+    padding: 1.25rem;
+  }
+
+  .content {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .project-link {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    font-size: 0.96rem;
+  }
+}
