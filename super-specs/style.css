@@ -403,6 +403,116 @@ img {
   color: var(--muted);
 }
 
+.about-section {
+  padding: 10px 0 70px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  min-height: 420px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(17, 24, 36, 0.96), rgba(11, 17, 26, 0.96));
+  box-shadow: var(--shadow);
+}
+
+.about-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 22px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+
+.about-card.primary {
+  margin-right: 56px;
+}
+
+.about-card.secondary {
+  margin-left: 56px;
+}
+
+.about-card.accent {
+  margin-right: 16px;
+}
+
+.mini-label {
+  color: var(--accent-2);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.about-card strong {
+  margin-top: 10px;
+  font-size: clamp(1.5rem, 2vw, 2.1rem);
+  letter-spacing: -0.05em;
+}
+
+.about-card small {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.about-copy {
+  padding: 10px 0;
+}
+
+.about-copy h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  letter-spacing: -0.06em;
+  line-height: 1.02;
+}
+
+.about-copy p {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.about-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.about-points div {
+  min-width: 180px;
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+}
+
+.about-points strong {
+  display: block;
+  font-size: 2rem;
+  letter-spacing: -0.05em;
+}
+
+.about-points span {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .showcase {
   padding: 20px 0 70px;
 }
@@ -566,10 +676,17 @@ img {
 
 @media (max-width: 900px) {
   .hero-grid,
+  .about-grid,
   .showcase-grid,
   .card-grid,
   .steps {
     grid-template-columns: 1fr;
+  }
+
+  .about-card.primary,
+  .about-card.secondary,
+  .about-card.accent {
+    margin: 0;
   }
 
   .nav {
