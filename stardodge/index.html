@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Star Dodge</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <div class="hud">
+        <div>
+          <p class="label">Score</p>
+          <p id="score">0</p>
+        </div>
+        <div>
+          <p class="label">Best</p>
+          <p id="best">0</p>
+        </div>
+      </div>
+
+      <canvas id="gameCanvas" width="480" height="640" aria-label="Star Dodge game"></canvas>
+
+      <div class="controls">
+        <button id="startButton">Start game</button>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
