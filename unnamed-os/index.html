@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codename web OS v1.0.4</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            color: #00ff66;
+        }
+        #matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.15;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        #terminal {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            padding: 30px;
+            overflow-y: auto;
+            background: rgba(5, 5, 5, 0.85);
+            text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+        }
+        .line {
+            margin-bottom: 8px;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .prompt {
+            color: #00ccff;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        #cmd-input {
+            background: transparent;
+            border: none;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            flex-grow: 1;
+            outline: none;
+            text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+        }
+        .output-error { color: #ff3344; text-shadow: 0 0 5px rgba(255, 51, 68, 0.5); }
+        .output-success { color: #ffff33; text-shadow: 0 0 5px rgba(255, 255, 51, 0.5); }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-bg"></canvas>
+
+    <div id="terminal" onclick="document.getElementById('cmd-input').focus()">
+        <div id="history">
+            <div class="line output-success">=== codename web OS v1.0.4 (Kernel: WebKit-JS-2026) ===</div>
+            <div class="line">Systeem online. Alle systemen functioneren nominaal.</div>
+            <div class="line">Typ <span class="output-success">help</span> voor een lijst met beschikbare OS commando's.</div>
+            <div class="line">---------------------------------------------------------</div>
+        </div>
+        <div class="input-line">
+            <span class="prompt">guest@codename-web-os:~\$</span>
+            <input type="text" id="cmd-input" autofocus autocomplete="off" spellcheck="false">
+        </div>
+    </div>
+
+    <script>
+        // Matrix Digitale Regen Achtergrond
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const katakana = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ';
+        const alphabet = katakana.split('');
+
+        const fontSize = 16;
+        let columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        let matrixInterval = setInterval(drawMatrix, 30);
+
+        // OS Terminal Logica
+        const input = document.getElementById('cmd-input');
+        const history = document.getElementById('history');
+        const terminal = document.getElementById('terminal');
+
+        const commands = {
+            help: "Beschikbare commando's:\n  help    - Toon dit menu\n  fetch   - Toon OS specificaties\n  matrix  - Schakel de achtergrond animatie aan/uit\n  clear   - Maak het scherm leeg\n  repo    - Open een geheime code repository\n  sudo    - Probeer root toegang te forceren",
+            fetch: "OS: codename web OS v1.0.4 🌌\nKernel: JS-WebOS-Engine-2026\nUptime: 2 minuten, 44 seconden\nShell: custom-bash-v2\nCPU: Virtual Web-Thread Engine\nMemory: 512MB / 16GB (Gealloceerd)",
+            sudo: "<span class='output-error'>FOUT: Deze actie is gerapporteerd. Je hebt geen administratorrechten.</span>",
+            repo: "<span class='output-success'>Toegang verleend! Initialiseren van code repository... https://github.com</span>"
+        };
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const rawValue = input.value;
+                const cmd = rawValue.trim().toLowerCase();
+                
+                // Voeg getypte commando toe aan geschiedenis
+                const userLine = document.createElement('div');
+                userLine.className = 'line';
+                userLine.innerHTML = `<span class="prompt">guest@codename-web-os:~$</span> ${rawValue}`;
+                history.appendChild(userLine);
+
+                // Verwerk commando
+                if (cmd !== '') {
+                    const outputLine = document.createElement('div');
+                    outputLine.className = 'line';
+
+                    if (cmd === 'clear') {
+                        history.innerHTML = '';
+                    } else if (cmd === 'matrix') {
+                        const bg = document.getElementById('matrix-bg');
+                        if (bg.style.opacity === '0') {
+                            bg.style.opacity = '0.15';
+                            outputLine.innerHTML = "Matrix overlay geactiveerd.";
+                        } else {
+                            bg.style.opacity = '0';
+                            outputLine.innerHTML = "Matrix overlay gedeactiveerd.";
+                        }
+                        history.appendChild(outputLine);
+                    } else if (commands[cmd]) {
+                        outputLine.innerHTML = commands[cmd];
+                        history.appendChild(outputLine);
+                    } else {
+                        outputLine.className = 'line output-error';
+                        outputLine.innerHTML = `Command niet gevonden: '${rawValue}'. Typ 'help' voor opties.`;
+                        history.appendChild(outputLine);
+                    }
+                }
+
+                // Reset input en scroll naar beneden
+                input.value = '';
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
