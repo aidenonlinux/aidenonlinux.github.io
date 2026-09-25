@@ -68,6 +68,13 @@ h1 {
   line-height: 1.7;
 }
 
+.project-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .project-link {
   display: inline-flex;
   align-items: center;
@@ -81,6 +88,7 @@ h1 {
   border-radius: 999px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   box-shadow: 0 12px 24px rgba(125, 211, 252, 0.18);
+  width: min(100%, 430px);
 }
 
 .project-link:hover,
@@ -97,6 +105,10 @@ h1 {
 
   .content {
     padding: 1.5rem 1.1rem;
+  }
+
+  .project-links {
+    gap: 0.85rem;
   }
 
   .project-link {
